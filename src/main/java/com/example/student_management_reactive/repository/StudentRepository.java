@@ -10,11 +10,11 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface StudentRepository extends ReactiveCrudRepository<Student ,Long> {
-        Mono<StudentDto> findByName(String name);
-        Flux<StudentDto> findByNameContainingIgnoreCase(String name);
+        Mono<Student> findByName(String name);
+        Flux<Student> findByNameContainingIgnoreCase(String name);
 
         //Query Method
 
         @Query("SELECT * FROM students WHERE name LIKE :name AND age= :age")
-         Flux<StudentDto> findByNameAndAge(String name, int age);
+         Flux<Student> findByNameAndAge(String name, int age);
 }

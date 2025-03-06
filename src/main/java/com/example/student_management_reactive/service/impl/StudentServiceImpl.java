@@ -53,17 +53,17 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Mono<StudentDto> findStudentByName(String name) {
-        return studentRepository.findByName(name);
+        return studentRepository.findByName(name).map(std->modelMapper.map(std,StudentDto.class));
     }
 
     @Override
     public Flux<StudentDto> searchStudentByName(String name) {
-        return studentRepository.findByNameContainingIgnoreCase(name);
+        return studentRepository.findByNameContainingIgnoreCase(name).map(std->modelMapper.map(std,StudentDto.class));
     }
 
     @Override
     public Flux<StudentDto> searchStudentByNameAndAge(String name, int age) {
-        return studentRepository.findByNameAndAge(name ,age);
+        return studentRepository.findByNameAndAge(name ,age).map(std->modelMapper.map(std,StudentDto.class));
     }
 
 
