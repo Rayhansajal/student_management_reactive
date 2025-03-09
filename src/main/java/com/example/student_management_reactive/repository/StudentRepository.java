@@ -15,6 +15,6 @@ public interface StudentRepository extends ReactiveCrudRepository<Student ,Long>
 
         //Query Method
 
-        @Query("SELECT * FROM students WHERE name LIKE :name AND age= :age")
+        @Query("SELECT * FROM students WHERE  LOWER(name) LIKE LOWER(:name) AND age= :age")
          Flux<Student> findByNameAndAge(String name, int age);
 }

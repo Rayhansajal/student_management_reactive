@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.time.Duration;
+
 @RestController
 @RequestMapping("/student")
 @AllArgsConstructor
@@ -51,6 +53,12 @@ public class StudentController {
     }
     @GetMapping("/searchQuery")
     public Flux<StudentDto> searchByNameAndAge(@RequestParam String name, @RequestParam int age){
-        return studentService.searchStudentByNameAndAge(name ,age);
+        return studentService.searchStudentByNameAndAge(name ,age).delayElements(Duration.ofMillis(1000));
+    }
+
+    @GetMapping("/lazyload")
+    public Flux<StudentDto> lazyLoad(){
+
+        return studentService.getAllStudent().delayElements(Duration.ofMillis(2000));
     }
 }

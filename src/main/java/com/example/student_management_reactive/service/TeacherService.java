@@ -9,4 +9,7 @@ public interface TeacherService {
     public Mono<TeacherDto> getStudentById(Long id);
     public Mono<TeacherDto> updateStudent(TeacherDto teacherDto , Long id);
     public Mono<Void> deleteTeacher(Long id);
+    public Mono<TeacherDto> findTeacherByName(String name);
+    public Flux<TeacherDto> searchTeacherByName(String name);
+    public Flux<TeacherDto> searchNameLik(String name);
 }

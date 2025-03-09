@@ -30,7 +30,8 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Mono<StudentDto> getStudentById(Long id) {
-        return studentRepository.findById(id).map(std->modelMapper.map(std,StudentDto.class));
+        return studentRepository.findById(id)
+                .map(std->modelMapper.map(std,StudentDto.class));
     }
 
     @Override
@@ -42,7 +43,8 @@ public class StudentServiceImpl implements StudentService {
             existing.setAddress(studentDto.getAddress());
             return studentRepository.save(existing);
         })
-                .map(updated-> modelMapper.map(updated,StudentDto.class));
+                .map(updated-> modelMapper
+                        .map(updated,StudentDto.class));
     }
 
     @Override
@@ -53,17 +55,25 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Mono<StudentDto> findStudentByName(String name) {
-        return studentRepository.findByName(name).map(std->modelMapper.map(std,StudentDto.class));
+        return studentRepository.findByName(name)
+                .map(std->modelMapper.map(std,StudentDto.class));
     }
 
     @Override
     public Flux<StudentDto> searchStudentByName(String name) {
-        return studentRepository.findByNameContainingIgnoreCase(name).map(std->modelMapper.map(std,StudentDto.class));
+        return studentRepository.findByNameContainingIgnoreCase(name)
+                .map(std->modelMapper.map(std,StudentDto.class));
     }
 
     @Override
     public Flux<StudentDto> searchStudentByNameAndAge(String name, int age) {
-        return studentRepository.findByNameAndAge(name ,age).map(std->modelMapper.map(std,StudentDto.class));
+
+        if(name.length()<3) {
+            return Flux.error(new IllegalArgumentException("search must be at least" + 3 + "characters long"));
+        }
+        String searchPattern = "%" + name + "%";
+        return studentRepository.findByNameAndAge(searchPattern ,age)
+                .map(std->modelMapper.map(std,StudentDto.class));
     }
 
 

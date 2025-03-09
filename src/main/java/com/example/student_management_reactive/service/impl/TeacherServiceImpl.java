@@ -22,17 +22,20 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public Mono<TeacherDto> createTeacher(TeacherDto teacherDto) {
         Teacher teacher =modelMapper.map(teacherDto,Teacher.class);
-        return teacherRepository.save(teacher).map(th->modelMapper.map(th,TeacherDto.class));
+        return teacherRepository.save(teacher)
+                .map(th->modelMapper.map(th,TeacherDto.class));
     }
 
     @Override
     public Flux<TeacherDto> getAllTeacher() {
-        return teacherRepository.findAll().map((th->modelMapper.map(th,TeacherDto.class)));
+        return teacherRepository.findAll()
+                .map((th->modelMapper.map(th,TeacherDto.class)));
     }
 
     @Override
     public Mono<TeacherDto> getStudentById(Long id) {
-        return teacherRepository.findById(id).map(th->modelMapper.map(th,TeacherDto.class));
+        return teacherRepository.findById(id)
+                .map(th->modelMapper.map(th,TeacherDto.class));
     }
 
     @Override
@@ -50,5 +53,29 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public Mono<Void> deleteTeacher(Long id) {
         return teacherRepository.deleteById(id);
+    }
+
+    @Override
+    public Mono<TeacherDto> findTeacherByName(String name) {
+        return teacherRepository.findByName(name)
+                .map(teacher -> modelMapper.map(teacher,TeacherDto.class));
+    }
+
+    @Override
+    public Flux<TeacherDto> searchTeacherByName(String name) {
+        return teacherRepository.findByNameContainingIgnoringCase(name)
+                .map(teacher -> modelMapper.map(teacher,TeacherDto.class));
+    }
+
+    @Override
+    public Flux<TeacherDto> searchNameLik(String name) {
+
+        if(name.length()<3){
+            return Flux.error(new IllegalArgumentException("search must be at least" + 3 + "characters long"));
+        }
+        String searchPattern = "%" + name + "%";
+        return teacherRepository.findTeacherNameLike(searchPattern)
+                .map(teacher -> modelMapper
+                .map(teacher,TeacherDto.class));
     }
 }

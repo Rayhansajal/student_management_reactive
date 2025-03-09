@@ -8,6 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.time.Duration;
+
 @RestController
 @RequestMapping("/teacher")
 @AllArgsConstructor
@@ -37,5 +40,19 @@ public class TeacherController {
     @DeleteMapping("/{id}")
     public Mono<Void> deleteTeacher(@PathVariable Long id) {
         return teacherService.deleteTeacher(id);
+    }
+
+    @GetMapping("/find/{name}")
+    public Mono<TeacherDto> findTeacherByName(@PathVariable String name){
+        return teacherService.findTeacherByName(name);
+    }
+    @GetMapping("/search")
+    public Flux<TeacherDto> searchTeacherByName(@RequestParam String name){
+        return teacherService.searchTeacherByName(name);
+    }
+
+    @GetMapping("/searchQuery")
+    public Flux<TeacherDto> searchByNameLike(@RequestParam String name) {
+        return teacherService.searchNameLik(name).delayElements(Duration.ofMillis(2000));
     }
 }
