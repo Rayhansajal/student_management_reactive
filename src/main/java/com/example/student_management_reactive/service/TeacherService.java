@@ -11,5 +11,5 @@ public interface TeacherService {
     public Mono<Void> deleteTeacher(Long id);
     public Mono<TeacherDto> findTeacherByName(String name);
     public Flux<TeacherDto> searchTeacherByName(String name);
-    public Flux<TeacherDto> searchNameLik(String name);
+    public Flux<TeacherDto> searchNameLike(String name);
 }

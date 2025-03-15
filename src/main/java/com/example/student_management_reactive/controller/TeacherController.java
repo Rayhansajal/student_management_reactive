@@ -1,6 +1,5 @@
 package com.example.student_management_reactive.controller;
 
-import com.example.student_management_reactive.dto.StudentDto;
 import com.example.student_management_reactive.dto.TeacherDto;
 import com.example.student_management_reactive.service.TeacherService;
 import lombok.AllArgsConstructor;
@@ -53,6 +52,6 @@ public class TeacherController {
 
     @GetMapping("/searchQuery")
     public Flux<TeacherDto> searchByNameLike(@RequestParam String name) {
-        return teacherService.searchNameLik(name).delayElements(Duration.ofMillis(2000));
+        return teacherService.searchNameLike(name).delayElements(Duration.ofMillis(2000));
     }
 }

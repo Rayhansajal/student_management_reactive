@@ -1,7 +1,6 @@
 package com.example.student_management_reactive.controller;
 
 import com.example.student_management_reactive.dto.CourseDto;
-import com.example.student_management_reactive.dto.StudentDto;
 import com.example.student_management_reactive.service.CourseService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;

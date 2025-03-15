@@ -68,7 +68,7 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public Flux<TeacherDto> searchNameLik(String name) {
+    public Flux<TeacherDto> searchNameLike(String name) {
 
         if(name.length()<3){
             return Flux.error(new IllegalArgumentException("search must be at least" + 3 + "characters long"));
