@@ -1,9 +1,9 @@
 package com.example.student_management_reactive.service.impl;
 
 import com.example.student_management_reactive.dto.BatchDto;
-import com.example.student_management_reactive.dto.CourseDto;
 import com.example.student_management_reactive.entity.Batch;
 import com.example.student_management_reactive.repository.BatchRepository;
+import com.example.student_management_reactive.repository.CourseRepository;
 import com.example.student_management_reactive.service.BatchService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -15,6 +15,10 @@ import reactor.core.publisher.Mono;
 public class BatchServiceImpl implements BatchService {
     private final BatchRepository batchRepository;
     private final ModelMapper modelMapper;
+    private final CourseRepository courseRepository;
+
+
+
     @Override
     public Mono<BatchDto> createBatch(BatchDto batchDto) {
         Batch batch = modelMapper.map(batchDto, Batch.class);
@@ -28,14 +32,14 @@ public class BatchServiceImpl implements BatchService {
     }
 
     @Override
-    public Mono<BatchDto> getBatchById(Long id) {
-        return batchRepository.findById(id).map(batch -> modelMapper.map(batch,BatchDto.class));
+    public Mono<BatchDto> getBatchById(Long batch_id) {
+        return batchRepository.findById(batch_id).map(batch -> modelMapper.map(batch,BatchDto.class));
     }
 
     @Override
-    public Mono<BatchDto> updateBatch(BatchDto batchDto, Long id) {
-        return batchRepository.findById(id).flatMap(existing->{
-                    existing.setName(batchDto.getName());
+    public Mono<BatchDto> updateBatch(BatchDto batchDto, Long batch_id) {
+        return batchRepository.findById(batch_id).flatMap(existing->{
+                    existing.setBatch_name(batchDto.getBatch_name());
                     existing.setDescription(batchDto.getDescription());
                     return batchRepository.save(existing);
                 })
@@ -43,7 +47,10 @@ public class BatchServiceImpl implements BatchService {
     }
 
     @Override
-    public Mono<Void> deleteBatch(Long id) {
-        return batchRepository.deleteById(id);
+    public Mono<Void> deleteBatch(Long batch_id) {
+        return batchRepository.deleteById(batch_id);
     }
+
+
+
 }

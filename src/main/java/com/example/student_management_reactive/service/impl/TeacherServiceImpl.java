@@ -1,8 +1,6 @@
 package com.example.student_management_reactive.service.impl;
 
-import com.example.student_management_reactive.dto.StudentDto;
 import com.example.student_management_reactive.dto.TeacherDto;
-import com.example.student_management_reactive.entity.Student;
 import com.example.student_management_reactive.entity.Teacher;
 import com.example.student_management_reactive.repository.TeacherRepository;
 import com.example.student_management_reactive.service.TeacherService;

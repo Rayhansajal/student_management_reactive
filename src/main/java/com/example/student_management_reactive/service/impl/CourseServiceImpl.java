@@ -1,9 +1,8 @@
 package com.example.student_management_reactive.service.impl;
 
 import com.example.student_management_reactive.dto.CourseDto;
-import com.example.student_management_reactive.dto.StudentDto;
 import com.example.student_management_reactive.entity.Course;
-import com.example.student_management_reactive.entity.Student;
+import com.example.student_management_reactive.repository.BatchRepository;
 import com.example.student_management_reactive.repository.CourseRepository;
 import com.example.student_management_reactive.service.CourseService;
 import lombok.AllArgsConstructor;
@@ -20,6 +19,8 @@ public class CourseServiceImpl implements CourseService {
     private final ModelMapper modelMapper;
 
 
+
+
     @Override
     public Mono<CourseDto> createCourse(CourseDto courseDto) {
         Course course =modelMapper.map(courseDto,Course.class);
@@ -32,15 +33,15 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Mono<CourseDto> getCourseById(Long id) {
-        return courseRepository.findById(id).map(crs->modelMapper.map(crs,CourseDto.class));
+    public Mono<CourseDto> getCourseById(Long course_id) {
+        return courseRepository.findById(course_id).map(crs->modelMapper.map(crs,CourseDto.class));
     }
 
     @Override
-    public Mono<CourseDto> updateCourse(CourseDto courseDto, Long id) {
-        return courseRepository.findById(id).flatMap(existing->{
+    public Mono<CourseDto> updateCourse(CourseDto courseDto, Long course_id) {
+        return courseRepository.findById(course_id).flatMap(existing->{
                     existing.setCourse_name(courseDto.getCourse_name());
-                    existing.setDescription(courseDto.getDescription());
+                    existing.setCourse_description(courseDto.getCourse_description());
                     existing.setDuration(courseDto.getDuration());
                     return courseRepository.save(existing);
                 })
@@ -48,9 +49,13 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Mono<Void> deleteCourse(Long id) {
-        return courseRepository.deleteById(id);
+    public Mono<Void> deleteCourse(Long course_id) {
+        return courseRepository.deleteById(course_id);
     }
+
+
+
+
 
 
 }
