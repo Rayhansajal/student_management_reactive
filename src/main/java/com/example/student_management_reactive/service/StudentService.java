@@ -6,12 +6,12 @@ import reactor.core.publisher.Mono;
 
 public interface StudentService {
 
-    public Mono<StudentDto> createStudent(StudentDto studentDto);
-    public Flux<StudentDto> getAllStudent();
-    public Mono<StudentDto> getStudentById(Long id);
-    public Mono<StudentDto> updateStudent(StudentDto studentDto , Long id);
-    public Mono<Void> deleteStudent(Long id);
-    public Mono<StudentDto> findStudentByName(String name);
-    public Flux<StudentDto> searchStudentByName(String name);
-    public Flux<StudentDto>searchStudentByNameAndAge(String name,int age);
+     Mono<StudentDto> createStudent(StudentDto studentDto);
+     Flux<StudentDto> getAllStudent();
+     Mono<StudentDto> getStudentById(Long id);
+     Mono<StudentDto> updateStudent(StudentDto studentDto , Long id);
+     Mono<Void> deleteStudent(Long id);
+     Mono<StudentDto> findStudentByName(String name);
+     Flux<StudentDto> searchStudentByName(String name);
+     Flux<StudentDto>searchStudentByNameAndAge(String name,int age);
 }

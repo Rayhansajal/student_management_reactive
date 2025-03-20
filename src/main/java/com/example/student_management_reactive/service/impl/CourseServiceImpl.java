@@ -2,7 +2,6 @@ package com.example.student_management_reactive.service.impl;
 
 import com.example.student_management_reactive.dto.CourseDto;
 import com.example.student_management_reactive.entity.Course;
-import com.example.student_management_reactive.repository.BatchRepository;
 import com.example.student_management_reactive.repository.CourseRepository;
 import com.example.student_management_reactive.service.CourseService;
 import lombok.AllArgsConstructor;

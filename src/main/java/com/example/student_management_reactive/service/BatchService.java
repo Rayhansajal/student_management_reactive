@@ -6,10 +6,10 @@ import reactor.core.publisher.Mono;
 
 
 public interface BatchService {
-    public Mono<BatchDto> createBatch(BatchDto batchDto);
-    public Flux<BatchDto> getAllBatch();
-    public Mono<BatchDto> getBatchById(Long batch_id);
-    public Mono<BatchDto> updateBatch(BatchDto batchDto , Long batch_id);
-    public Mono<Void> deleteBatch(Long batch_id);
+     Mono<BatchDto> createBatch(BatchDto batchDto);
+     Flux<BatchDto> getAllBatch();
+     Mono<BatchDto> getBatchById(Long batch_id);
+     Mono<BatchDto> updateBatch(BatchDto batchDto , Long batch_id);
+     Mono<Void> deleteBatch(Long batch_id);
 
 }

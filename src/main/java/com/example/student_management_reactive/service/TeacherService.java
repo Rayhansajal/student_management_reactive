@@ -4,12 +4,12 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface TeacherService {
-    public Mono<TeacherDto> createTeacher(TeacherDto teacherDto);
-    public Flux<TeacherDto> getAllTeacher();
-    public Mono<TeacherDto> getStudentById(Long id);
-    public Mono<TeacherDto> updateStudent(TeacherDto teacherDto , Long id);
-    public Mono<Void> deleteTeacher(Long id);
-    public Mono<TeacherDto> findTeacherByName(String name);
-    public Flux<TeacherDto> searchTeacherByName(String name);
-    public Flux<TeacherDto> searchNameLike(String name);
+     Mono<TeacherDto> createTeacher(TeacherDto teacherDto);
+     Flux<TeacherDto> getAllTeacher();
+     Mono<TeacherDto> getStudentById(Long id);
+     Mono<TeacherDto> updateStudent(TeacherDto teacherDto , Long id);
+     Mono<Void> deleteTeacher(Long id);
+     Mono<TeacherDto> findTeacherByName(String name);
+     Flux<TeacherDto> searchTeacherByName(String name);
+     Flux<TeacherDto> searchNameLike(String name);
 }
