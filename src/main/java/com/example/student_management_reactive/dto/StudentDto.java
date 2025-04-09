@@ -1,16 +1,22 @@
 package com.example.student_management_reactive.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class StudentDto {
+public class StudentDto extends BaseDto {
 
-    private String name;
+    private Long roll_number;
+    private String firstName;
+    private String lastName;
+    private String gender;
     private Integer age;
     private String email;
+    private String mobile;
     private String address;
+    private LocalDate dateOfBirth;
+
+
+
 }

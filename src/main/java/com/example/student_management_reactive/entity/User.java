@@ -7,13 +7,14 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
 @Data
-@Table("batch")
-@AllArgsConstructor
 @NoArgsConstructor
-public class Batch {
+@AllArgsConstructor
+@Table("users")
+public class User {
     @Id
-    private Long batch_id;
-    private String batch_name;
-    private String description;
+    private Long id;
 
+    private String username;
+    private String password;
+    private String role;                // ROLE_ADMIN/USER
 }

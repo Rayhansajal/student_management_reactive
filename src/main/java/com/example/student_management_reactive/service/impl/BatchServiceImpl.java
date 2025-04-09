@@ -50,6 +50,4 @@ public class BatchServiceImpl implements BatchService {
         return batchRepository.deleteById(batch_id);
     }
 
-
-
 }

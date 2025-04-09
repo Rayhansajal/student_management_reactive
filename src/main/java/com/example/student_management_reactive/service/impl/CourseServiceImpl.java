@@ -52,9 +52,4 @@ public class CourseServiceImpl implements CourseService {
         return courseRepository.deleteById(course_id);
     }
 
-
-
-
-
-
 }

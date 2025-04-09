@@ -7,13 +7,13 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
 @Data
-@Table("batch")
+@Table
 @AllArgsConstructor
 @NoArgsConstructor
-public class Batch {
+public class Result {
     @Id
-    private Long batch_id;
-    private String batch_name;
-    private String description;
-
+    private Long resultId;
+    private Long studentId;
+    private Long courseId;
+    private String gpa;
 }

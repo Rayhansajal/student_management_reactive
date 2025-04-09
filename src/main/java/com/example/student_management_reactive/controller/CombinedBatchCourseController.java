@@ -13,7 +13,7 @@ import reactor.core.publisher.Mono;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/data")
+@RequestMapping("/combined")
 public class CombinedBatchCourseController {
     private final CombinedBatchCourseService combinedBatchCourseService;
 
@@ -26,7 +26,7 @@ public class CombinedBatchCourseController {
     @GetMapping("/courses/{course_id}/batches")
     public Mono<ResponseEntity<CombinedBatchCourseDTO>> getCourseAndBatches(@PathVariable Long course_id) {
         return combinedBatchCourseService.getCourseAndBatchesById(course_id)
-                .map(courseBatchDTO -> ResponseEntity.ok(courseBatchDTO))
+                .map(ResponseEntity::ok)
                 .defaultIfEmpty(ResponseEntity.notFound().build());
     }
 }
