@@ -2,6 +2,7 @@ package com.example.student_management_reactive.controller;
 
 import com.example.student_management_reactive.config.AuditLogService;
 import com.example.student_management_reactive.dto.StudentDto;
+import com.example.student_management_reactive.entity.Student;
 import com.example.student_management_reactive.service.StudentService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -69,6 +70,31 @@ public Mono<StudentDto> createStudent(@RequestBody StudentDto studentDto) {
     @GetMapping("/searchQuery")
     public Flux<StudentDto> searchByNameAndAge(@RequestParam String firstName, @RequestParam int age){
         return studentService.searchStudentByNameAndAge(firstName ,age).delayElements(Duration.ofMillis(1000));
+    }
+
+
+    @PostMapping("/advancedSearch")
+    public Flux<Student> searchStudents(@RequestBody Student student) {
+        return studentService.advancedSearch(student);
+    }
+
+
+    @GetMapping("/advancedSearch2")
+    public Flux<Student> searchStudents(
+            @RequestParam(required = false) String firstName,
+            @RequestParam(required = false) String lastName,
+            @RequestParam(required = false) Integer age,
+            @RequestParam(required = false) String email,
+            @RequestParam(required = false) String address
+    ) {
+        Student request = new Student();
+        request.setFirstName(firstName);
+        request.setLastName(lastName);
+        request.setAge(age);
+        request.setEmail(email);
+        request.setAddress(address);
+
+        return studentService.advancedSearch(request);
     }
 
 }

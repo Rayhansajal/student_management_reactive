@@ -10,13 +10,17 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.r2dbc.core.DatabaseClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.rmi.StubNotFoundException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 @AllArgsConstructor
 @Service
@@ -25,6 +29,7 @@ public class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
+    private final DatabaseClient databaseClient;
 
 
     private final AuthenticatedUserService userService;
@@ -115,7 +120,68 @@ public class StudentServiceImpl implements StudentService {
                 .map(std->modelMapper.map(std,StudentDto.class));
     }
 
+    @Override
+    public Flux<Student> advancedSearch(Student student) {
+        StringBuilder query = new StringBuilder("SELECT * FROM students WHERE 1=1");
+        Map<String, Object> params = new HashMap<>();
 
+        if (student.getFirstName() != null) {
+            query.append(" AND first_name ILIKE :firstName");
+            params.put("firstName", "%" + student.getFirstName() + "%");
+        }
+        if (student.getLastName() != null) {
+            query.append(" AND last_name ILIKE :lastName");
+            params.put("lastName", "%" + student.getLastName() + "%");
+        }
+        if (student.getGender() != null) {
+            query.append(" AND gender = :gender");
+            params.put("gender", student.getGender());
+        }
+        if (student.getAge() != null) {
+            query.append(" AND age = :age");
+            params.put("age", student.getAge());
+        }
+        if (student.getEmail() != null) {
+            query.append(" AND email ILIKE :email");
+            params.put("email", "%" + student.getEmail() + "%");
+        }
+        if (student.getMobile() != null) {
+            query.append(" AND mobile ILIKE :mobile");
+            params.put("mobile", "%" + student.getMobile() + "%");
+        }
+        if (student.getAddress() != null) {
+            query.append(" AND address ILIKE :address");
+            params.put("address", "%" + student.getAddress() + "%");
+        }
+        if (student.getDateOfBirth() != null) {
+            query.append(" AND date_of_birth = :dob");
+            params.put("dob", student.getDateOfBirth());
+        }
+        if (student.getRoll_number() != null) {
+            query.append(" AND roll_number = :rollNumber");
+            params.put("rollNumber", student.getRoll_number());
+        }
+
+        DatabaseClient.GenericExecuteSpec spec = databaseClient.sql(query.toString());
+        for (Map.Entry<String, Object> entry : params.entrySet()) {
+            spec = spec.bind(entry.getKey(), entry.getValue());
+        }
+
+        return spec.map((row, meta) -> {
+            Student s = new Student();
+            s.setId(row.get("id", Long.class));
+            s.setRoll_number(row.get("roll_number", Long.class));
+            s.setFirstName(row.get("first_name", String.class));
+            s.setLastName(row.get("last_name", String.class));
+            s.setGender(row.get("gender", String.class));
+            s.setAge(row.get("age", Integer.class));
+            s.setEmail(row.get("email", String.class));
+            s.setMobile(row.get("mobile", String.class));
+            s.setAddress(row.get("address", String.class));
+            s.setDateOfBirth(row.get("date_of_birth", LocalDate.class));
+            return s;
+        }).all();
+    }
 }
 
 
