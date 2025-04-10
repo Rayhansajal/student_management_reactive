@@ -23,7 +23,7 @@ public class AuthenticationManager implements ReactiveAuthenticationManager {
             String username = jwtUtil.getUsernameFromToken(token);
             UserDetails userDetails = User.withUsername(username)
                     .password("") // No password needed for JWT-based auth
-                    .roles("USER") // Optionally load roles from DB
+                    .roles("ADMIN") // Optionally load roles from DB
                     .build();
             return Mono.just(new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities()));
         }
