@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TeacherDto {
+public class TeacherDto extends BaseDto {
     private String name;
     private Integer age;
     private String email;

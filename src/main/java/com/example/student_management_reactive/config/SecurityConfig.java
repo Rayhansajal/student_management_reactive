@@ -31,7 +31,10 @@ public class SecurityConfig {
                 .securityContextRepository(securityContextRepository)
                 .authorizeExchange(exchanges -> exchanges
                         .pathMatchers("/auth/**").permitAll()
+
                         .pathMatchers(HttpMethod.POST, "/student/**").hasRole("ADMIN")
+//                        .pathMatchers(HttpMethod.PUT, "/student/**").hasRole("ADMIN")
+//                        .pathMatchers(HttpMethod.DELETE, "/student/**").hasRole("ADMIN")
                         .anyExchange().authenticated()
                 )
                 .build();

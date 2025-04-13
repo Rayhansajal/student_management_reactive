@@ -10,6 +10,7 @@ public interface StudentRepository extends ReactiveCrudRepository<Student ,Long>
         Mono<Student> findByFirstName(String firstName);
         Flux<Student> findByFirstNameContainingIgnoreCase(String firstName);
         Mono<Student> findByEmail(String email);
+//        Mono<Student> findById(Long id);
 
 
         //Query Method
@@ -19,9 +20,9 @@ public interface StudentRepository extends ReactiveCrudRepository<Student ,Long>
 
 
 
-    Mono<Student> findByIdAndDeletedByIsNull(Long id); // Only fetch active records
-
-    Flux<Student> findByFirstNameContainingIgnoreCaseAndDeletedByIsNull(String firstName);
+//    Mono<Student> findByIdAndDeletedByIsNull(Long id); // Only fetch active records
+//
+//    Flux<Student> findByFirstNameContainingIgnoreCaseAndDeletedByIsNull(String firstName);
 
 
 }

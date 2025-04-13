@@ -10,5 +10,4 @@ public abstract class BaseDto {
     private LocalDateTime updatedAt;
     private String createdBy;
     private String updatedBy;
-    private String deletedBy;
 }

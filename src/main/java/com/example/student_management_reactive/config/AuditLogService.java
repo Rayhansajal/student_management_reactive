@@ -43,19 +43,6 @@ public class AuditLogService {
                 });
     }
 
-    // Delete student, marks entity as deleted and logs
-    public Mono<Void> deleteStudent(Long studentId) {
-        return studentRepository.findById(studentId)
-                .flatMap(student -> {
-                    return ReactiveSecurityContextHolder.getContext()
-                            .map(SecurityContext::getAuthentication)
-                            .map(Authentication::getName)
-                            .defaultIfEmpty("system")
-                            .flatMap(username -> {
-                                student.markAsDeleted(username);
-                                return studentRepository.save(student).then();
-                            });
-                });
-    }
+
 
 }

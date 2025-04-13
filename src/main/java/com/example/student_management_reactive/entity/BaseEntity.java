@@ -27,10 +27,5 @@ public abstract class BaseEntity {
     @Column("updated_by")
     private String updatedBy;
 
-    @Column("deleted_by")
-    private String deletedBy;
 
-    public void markAsDeleted(String username) {
-        this.deletedBy = username;
-    }
 }
