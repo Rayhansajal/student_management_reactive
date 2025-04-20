@@ -1,5 +1,6 @@
 package com.example.student_management_reactive.entity;
 
+import com.example.student_management_reactive.dto.DepartmentDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,9 +17,11 @@ import java.util.Set;
 @NoArgsConstructor
 public class Course {
     @Id
-    private Long course_id;
-    private String course_name;
-    private String course_description;
+    private Long courseId;
+    private String courseName;
+    private String courseDescription;
     private String duration;
 
+
+    private Long departmentId; // FK to Department
 }

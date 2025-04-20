@@ -8,5 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EnrollmentDto {
-    private String description;
+    private DepartmentDto departmentDto;
+    private CourseDto courseDto;
 }

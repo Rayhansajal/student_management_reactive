@@ -39,8 +39,8 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public Mono<CourseDto> updateCourse(CourseDto courseDto, Long course_id) {
         return courseRepository.findById(course_id).flatMap(existing->{
-                    existing.setCourse_name(courseDto.getCourse_name());
-                    existing.setCourse_description(courseDto.getCourse_description());
+                    existing.setCourseName(courseDto.getCourseName());
+                    existing.setCourseDescription(courseDto.getCourseDescription());
                     existing.setDuration(courseDto.getDuration());
                     return courseRepository.save(existing);
                 })

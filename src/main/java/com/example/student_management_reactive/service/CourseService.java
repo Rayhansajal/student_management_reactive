@@ -7,9 +7,9 @@ import reactor.core.publisher.Mono;
 public interface CourseService {
      Mono<CourseDto> createCourse(CourseDto courseDto);
      Flux<CourseDto> getAllCourse();
-     Mono<CourseDto> getCourseById(Long course_id);
-     Mono<CourseDto> updateCourse(CourseDto courseDto, Long course_id);
-     Mono<Void> deleteCourse(Long course_id);
+     Mono<CourseDto> getCourseById(Long courseId);
+     Mono<CourseDto> updateCourse(CourseDto courseDto, Long courseId);
+     Mono<Void> deleteCourse(Long courseId);
 
 
 

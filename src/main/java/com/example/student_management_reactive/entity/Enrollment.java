@@ -13,6 +13,7 @@ import org.springframework.data.relational.core.mapping.Table;
 public class Enrollment {
     @Id
     private Long enrollmentId;
-    private String description;
+    private Department department;
+    private Course course;
 
 }
