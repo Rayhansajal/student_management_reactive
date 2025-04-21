@@ -53,9 +53,18 @@ public class DepartmentServiceImpl implements DepartmentService {
         return departmentRepository.deleteById(id);
     }
 
+
+
+
+
     @Override
     public Mono<DepartmentWithCoursesDTO> getDepartmentWithCourses(Long departmentId) {
+        if (departmentId == null) {
+            return Mono.error(new IllegalArgumentException("Department ID cannot be null"));
+        }
+
         return departmentRepository.findById(departmentId)
+                .switchIfEmpty(Mono.error(new RuntimeException("Department not found")))
                 .flatMap(dept ->
                         courseRepository.findByDepartmentId(departmentId)
                                 .collectList()

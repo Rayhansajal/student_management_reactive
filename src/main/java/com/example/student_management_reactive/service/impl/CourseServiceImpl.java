@@ -3,6 +3,7 @@ package com.example.student_management_reactive.service.impl;
 import com.example.student_management_reactive.dto.CourseDto;
 import com.example.student_management_reactive.entity.Course;
 import com.example.student_management_reactive.repository.CourseRepository;
+import com.example.student_management_reactive.repository.DepartmentRepository;
 import com.example.student_management_reactive.service.CourseService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -16,15 +17,32 @@ public class CourseServiceImpl implements CourseService {
 
     private final CourseRepository courseRepository;
     private final ModelMapper modelMapper;
+    private final DepartmentRepository departmentRepository;
 
 
 
 
-    @Override
-    public Mono<CourseDto> createCourse(CourseDto courseDto) {
-        Course course =modelMapper.map(courseDto,Course.class);
-        return courseRepository.save(course).map(crs->modelMapper.map(crs, CourseDto.class));
+//    @Override
+//    public Mono<CourseDto> createCourse(CourseDto courseDto) {
+//        Course course =modelMapper.map(courseDto,Course.class);
+//        return courseRepository.save(course).map(crs->modelMapper.map(crs, CourseDto.class));
+//    }
+@Override
+public Mono<CourseDto> createCourse(CourseDto courseDto) {
+    if (courseDto.getDepartmentId() == null) {
+        return Mono.error(new IllegalArgumentException("Department ID is required"));
     }
+
+    return departmentRepository.findById(courseDto.getDepartmentId())
+            .switchIfEmpty(Mono.error(new RuntimeException("Department does not exist")))
+            .flatMap(dept -> {
+                Course course = modelMapper.map(courseDto, Course.class);
+                course.setCourseId(null); // Ensure this is treated as a new entity
+                return courseRepository.save(course);
+            })
+            .map(savedCourse -> modelMapper.map(savedCourse, CourseDto.class));
+}
+
 
     @Override
     public Flux<CourseDto> getAllCourse() {

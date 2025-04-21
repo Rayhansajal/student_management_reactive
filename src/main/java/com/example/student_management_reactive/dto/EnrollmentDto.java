@@ -4,10 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class EnrollmentDto {
-    private DepartmentDto departmentDto;
-    private CourseDto courseDto;
+    private StudentDto student;
+    private DepartmentDto department;
+    private List<CourseDto> courses;
 }

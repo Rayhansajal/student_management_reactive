@@ -28,4 +28,6 @@ public class Student extends BaseEntity{
     private String address;
     private LocalDate dateOfBirth;
 
+    private Long departmentId;
+
 }

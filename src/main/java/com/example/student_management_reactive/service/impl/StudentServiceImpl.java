@@ -37,25 +37,15 @@ public class StudentServiceImpl implements StudentService {
 
 
 
-//    @Override
-//    public Mono<StudentDto> createStudent(StudentDto dto) {
-//        Student student = modelMapper.map(dto, Student.class);
-//
-//        return userService.getAuthenticatedUserName()
-//                .flatMap(username -> {
-//                    student.setCreatedBy(username);
-//                    student.setCreatedAt(LocalDateTime.now());
-//                    logger.info("Creating student: {} by {}", student.getFirstName(), username);
-//                    return studentRepository.save(student);
-//                })
-//                .map(saved -> modelMapper.map(saved, StudentDto.class));
-//    }
+@Override
+public Mono<StudentDto> createStudent(StudentDto studentDto) {
+    Student student = modelMapper.map(studentDto, Student.class);
+    student.setId(null); // Ensure entity is treated as new
+    return studentRepository.save(student)
+            .map(savedStudent -> modelMapper.map(savedStudent, StudentDto.class));
+}
 
-    @Override
-    public Mono<StudentDto> createStudent(StudentDto studentDto) {
-            Student student=modelMapper.map(studentDto,Student.class);
-            return studentRepository.save(student).map(std->modelMapper.map(std,StudentDto.class));
-    }
+
 
     @Override
     public Flux<StudentDto> getAllStudent() {

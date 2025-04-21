@@ -7,6 +7,7 @@ import java.time.LocalDate;
 @Data
 public class StudentDto extends BaseDto {
 
+    private Long Id;
     private Long roll_number;
     private String firstName;
     private String lastName;
@@ -16,6 +17,8 @@ public class StudentDto extends BaseDto {
     private String mobile;
     private String address;
     private LocalDate dateOfBirth;
+
+    private Long departmentId;
 
 
 

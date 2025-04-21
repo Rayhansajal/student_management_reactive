@@ -7,9 +7,13 @@
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
     <!-- Include the students table changelog -->
-    <include file="db/changelog/db.changelog.changeset-1.0.xml"/>
-    <include file="db/changelog/changeset-2.0.xml"/>
+
     <include file="db/changelog/changeset-3.0.xml"/>
     <include file="db/changelog/01-create-users-table.xml"/>
+    <include file="db/changelog/department.xml"/>
+    <include file="db/changelog/courses.xml"/>
+    <include file="db/changelog/students.xml"/>
+
+
 
 </databaseChangeLog>

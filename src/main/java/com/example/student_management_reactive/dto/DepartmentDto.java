@@ -10,6 +10,6 @@ import org.springframework.data.annotation.Id;
 @NoArgsConstructor
 public class DepartmentDto {
     @Id
-    private Long departmentId;
+
     private String departmentName;
 }
