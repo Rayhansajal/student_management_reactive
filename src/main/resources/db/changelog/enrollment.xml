@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="20250422-01" author="you">
+        <createTable tableName="enrollments">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="student_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="department_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="course_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="enrollment_date" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="enrollments"
+                baseColumnNames="student_id"
+                referencedTableName="students"
+                referencedColumnNames="id"
+                constraintName="fk_enrollment_student"/>
+
+        <addForeignKeyConstraint
+                baseTableName="enrollments"
+                baseColumnNames="department_id"
+                referencedTableName="department"
+                referencedColumnNames="department_id"
+                constraintName="fk_enrollment_department"/>
+
+        <addForeignKeyConstraint
+                baseTableName="enrollments"
+                baseColumnNames="course_id"
+                referencedTableName="courses"
+                referencedColumnNames="course_id"
+                constraintName="fk_enrollment_course"/>
+    </changeSet>
+
+</databaseChangeLog>

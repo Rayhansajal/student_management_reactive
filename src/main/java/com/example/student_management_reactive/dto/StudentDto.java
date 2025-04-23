@@ -7,8 +7,8 @@ import java.time.LocalDate;
 @Data
 public class StudentDto extends BaseDto {
 
-    private Long Id;
-    private Long roll_number;
+    private Long id;
+    private Long rollNumber;
     private String firstName;
     private String lastName;
     private String gender;

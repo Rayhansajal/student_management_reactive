@@ -6,14 +6,21 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Data
-@Table
 @AllArgsConstructor
 @NoArgsConstructor
-public class Result {
+@Table("enrollments")
+public class Enrollment {
     @Id
-    private Long resultId;
     private Long id;
+
+    private Long studentId;
     private Long courseId;
-    private String gpa;
+    private Long departmentId;
+    private LocalDate enrollmentDate;
+
+
 }

@@ -13,6 +13,7 @@
     <include file="db/changelog/department.xml"/>
     <include file="db/changelog/courses.xml"/>
     <include file="db/changelog/students.xml"/>
+    <include file="db/changelog/enrollment.xml"/>
 
 
 

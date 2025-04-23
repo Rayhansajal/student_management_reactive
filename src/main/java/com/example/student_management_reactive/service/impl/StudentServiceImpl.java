@@ -1,4 +1,5 @@
 package com.example.student_management_reactive.service.impl;
+
 import com.example.student_management_reactive.dto.StudentDto;
 import com.example.student_management_reactive.entity.Student;
 import com.example.student_management_reactive.repository.StudentRepository;
@@ -18,7 +19,6 @@ import reactor.core.publisher.Mono;
 
 import java.rmi.StubNotFoundException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -62,7 +62,7 @@ public Mono<StudentDto> createStudent(StudentDto studentDto) {
     public Mono<StudentDto> updateStudent(StudentDto studentDto, Long id) {
         return studentRepository.findById(id)
                 .flatMap(existing->{
-                    existing.setRoll_number(studentDto.getRoll_number());
+                    existing.setRollNumber(studentDto.getRollNumber());
                     existing.setFirstName(studentDto.getFirstName());
                     existing.setLastName(studentDto.getLastName());
                     existing.setGender(studentDto.getGender());
@@ -147,9 +147,9 @@ public Mono<StudentDto> createStudent(StudentDto studentDto) {
             query.append(" AND date_of_birth = :dob");
             params.put("dob", student.getDateOfBirth());
         }
-        if (student.getRoll_number() != null) {
+        if (student.getRollNumber() != null) {
             query.append(" AND roll_number = :rollNumber");
-            params.put("rollNumber", student.getRoll_number());
+            params.put("rollNumber", student.getRollNumber());
         }
 
         DatabaseClient.GenericExecuteSpec spec = databaseClient.sql(query.toString());
@@ -159,8 +159,8 @@ public Mono<StudentDto> createStudent(StudentDto studentDto) {
 
         return spec.map((row, meta) -> {
             Student s = new Student();
-            s.setId(row.get("id", Long.class));
-            s.setRoll_number(row.get("roll_number", Long.class));
+            s.setId(row.get("student_id", Long.class));
+            s.setRollNumber(row.get("roll_number", Long.class));
             s.setFirstName(row.get("first_name", String.class));
             s.setLastName(row.get("last_name", String.class));
             s.setGender(row.get("gender", String.class));

@@ -18,7 +18,7 @@ public class Student extends BaseEntity{
 
     @Id
     private Long id;
-    private Long roll_number;
+    private Long rollNumber;
     private String firstName;
     private String lastName;
     private String gender;
