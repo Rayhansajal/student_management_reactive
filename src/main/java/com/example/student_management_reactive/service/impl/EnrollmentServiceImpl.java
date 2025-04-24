@@ -17,6 +17,7 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -227,5 +228,41 @@ public class EnrollmentServiceImpl implements EnrollmentService {
                                     log.info("Deleted enrollment with ID: {}", enrollmentId)));
                 });
     }
+
+    @Override
+    public Flux<EnrollmentDto> getAllEnrollments(Pageable pageable) {
+        int limit = pageable.getPageSize();
+        int offset = pageable.getPageNumber() * pageable.getPageSize();
+
+        return enrollmentRepository.findAllPaged(limit, offset)
+                .flatMap(enrollment ->
+                        Mono.zip(
+                                studentRepository.findById(enrollment.getStudentId())
+                                        .switchIfEmpty(Mono.error(new IllegalStateException("Student not found"))),
+                                departmentRepository.findById(enrollment.getDepartmentId())
+                                        .switchIfEmpty(Mono.error(new IllegalStateException("Department not found"))),
+                                courseRepository.findById(enrollment.getCourseId())
+                                        .switchIfEmpty(Mono.error(new IllegalStateException("Course not found")))
+                        ).map(tuple -> {
+                            EnrollmentDto dto = new EnrollmentDto();
+                            dto.setId(enrollment.getId());
+                            dto.setStudentId(enrollment.getStudentId());
+                            dto.setDepartmentId(enrollment.getDepartmentId());
+                            dto.setCourseIds(List.of(enrollment.getCourseId()));
+                            dto.setEnrollmentDate(enrollment.getEnrollmentDate());
+
+                            dto.setStudent(modelMapper.map(tuple.getT1(), StudentDto.class));
+                            dto.setDepartment(modelMapper.map(tuple.getT2(), DepartmentDto.class));
+                            dto.setCourses(List.of(modelMapper.map(tuple.getT3(), CourseDto.class)));
+
+                            return dto;
+                        })
+                )
+                .onErrorResume(e -> {
+                    log.error("Error fetching enrollments", e);
+                    return Flux.error(new RuntimeException("Failed to fetch enrollments", e));
+                });
+    }
+
 
 }

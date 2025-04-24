@@ -3,9 +3,13 @@ package com.example.student_management_reactive.controller;
 import com.example.student_management_reactive.dto.EnrollmentDto;
 import com.example.student_management_reactive.service.EnrollmentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 @RestController
 @RequestMapping("enrollments")
@@ -37,4 +41,15 @@ public class EnrollmentController {
     public Mono<Void> deleteEnrollment(@PathVariable Long enrollmentId) {
         return enrollmentService.deleteEnrollment(enrollmentId);
     }
+
+
+    @GetMapping
+    public Flux<EnrollmentDto> getAllEnrollments(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        Pageable pageable = PageRequest.of(page, size);
+        return enrollmentService.getAllEnrollments(pageable);
+    }
+
 }

@@ -3,8 +3,6 @@ package com.example.student_management_reactive.service.impl;
 import com.example.student_management_reactive.dto.StudentDto;
 import com.example.student_management_reactive.entity.Student;
 import com.example.student_management_reactive.repository.StudentRepository;
-import com.example.student_management_reactive.repository.UserRepository;
-import com.example.student_management_reactive.security.AuthenticatedUserService;
 import com.example.student_management_reactive.service.StudentService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -28,11 +26,7 @@ public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository studentRepository;
     private final ModelMapper modelMapper;
-    private final UserRepository userRepository;
     private final DatabaseClient databaseClient;
-
-
-    private final AuthenticatedUserService userService;
     private static final Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
 
 
@@ -116,11 +110,11 @@ public Mono<StudentDto> createStudent(StudentDto studentDto) {
         Map<String, Object> params = new HashMap<>();
 
         if (student.getFirstName() != null) {
-            query.append(" AND first_name ILIKE :firstName");
+            query.append(" AND first_name LIKE :firstName");
             params.put("firstName", "%" + student.getFirstName() + "%");
         }
         if (student.getLastName() != null) {
-            query.append(" AND last_name ILIKE :lastName");
+            query.append(" AND last_name LIKE :lastName");
             params.put("lastName", "%" + student.getLastName() + "%");
         }
         if (student.getGender() != null) {
@@ -132,15 +126,15 @@ public Mono<StudentDto> createStudent(StudentDto studentDto) {
             params.put("age", student.getAge());
         }
         if (student.getEmail() != null) {
-            query.append(" AND email ILIKE :email");
+            query.append(" AND email LIKE :email");
             params.put("email", "%" + student.getEmail() + "%");
         }
         if (student.getMobile() != null) {
-            query.append(" AND mobile ILIKE :mobile");
+            query.append(" AND mobile LIKE :mobile");
             params.put("mobile", "%" + student.getMobile() + "%");
         }
         if (student.getAddress() != null) {
-            query.append(" AND address ILIKE :address");
+            query.append(" AND address LIKE :address");
             params.put("address", "%" + student.getAddress() + "%");
         }
         if (student.getDateOfBirth() != null) {

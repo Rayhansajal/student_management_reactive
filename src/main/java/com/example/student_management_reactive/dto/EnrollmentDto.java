@@ -12,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EnrollmentDto {
+    private Long id;
     private Long studentId;
     private Long departmentId;
     private List<Long> courseIds;
