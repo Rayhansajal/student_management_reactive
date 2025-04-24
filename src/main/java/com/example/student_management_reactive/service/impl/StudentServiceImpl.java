@@ -17,6 +17,7 @@ import reactor.core.publisher.Mono;
 
 import java.rmi.StubNotFoundException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -110,11 +111,11 @@ public Mono<StudentDto> createStudent(StudentDto studentDto) {
         Map<String, Object> params = new HashMap<>();
 
         if (student.getFirstName() != null) {
-            query.append(" AND first_name LIKE :firstName");
+            query.append(" AND first_name ILIKE :firstName");
             params.put("firstName", "%" + student.getFirstName() + "%");
         }
         if (student.getLastName() != null) {
-            query.append(" AND last_name LIKE :lastName");
+            query.append(" AND last_name ILIKE :lastName");
             params.put("lastName", "%" + student.getLastName() + "%");
         }
         if (student.getGender() != null) {
@@ -126,15 +127,15 @@ public Mono<StudentDto> createStudent(StudentDto studentDto) {
             params.put("age", student.getAge());
         }
         if (student.getEmail() != null) {
-            query.append(" AND email LIKE :email");
+            query.append(" AND email ILIKE :email");
             params.put("email", "%" + student.getEmail() + "%");
         }
         if (student.getMobile() != null) {
-            query.append(" AND mobile LIKE :mobile");
+            query.append(" AND mobile ILIKE :mobile");
             params.put("mobile", "%" + student.getMobile() + "%");
         }
         if (student.getAddress() != null) {
-            query.append(" AND address LIKE :address");
+            query.append(" AND address ILIKE :address");
             params.put("address", "%" + student.getAddress() + "%");
         }
         if (student.getDateOfBirth() != null) {
@@ -153,7 +154,7 @@ public Mono<StudentDto> createStudent(StudentDto studentDto) {
 
         return spec.map((row, meta) -> {
             Student s = new Student();
-            s.setId(row.get("student_id", Long.class));
+            s.setId(row.get("id", Long.class));
             s.setRollNumber(row.get("roll_number", Long.class));
             s.setFirstName(row.get("first_name", String.class));
             s.setLastName(row.get("last_name", String.class));
@@ -163,6 +164,12 @@ public Mono<StudentDto> createStudent(StudentDto studentDto) {
             s.setMobile(row.get("mobile", String.class));
             s.setAddress(row.get("address", String.class));
             s.setDateOfBirth(row.get("date_of_birth", LocalDate.class));
+            s.setCreatedAt(row.get("created_at", LocalDateTime.class));
+            s.setUpdatedAt(row.get("updated_at", LocalDateTime.class));
+            s.setCreatedBy(row.get("created_by", String.class));
+            s.setUpdatedBy(row.get("updated_by",String.class));
+            s.setDepartmentId(row.get("department_id", Long.class));
+
             return s;
         }).all();
     }
