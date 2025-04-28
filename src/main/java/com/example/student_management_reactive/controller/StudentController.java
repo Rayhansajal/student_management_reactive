@@ -13,6 +13,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.Duration;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/student")
@@ -41,19 +42,19 @@ public Mono<StudentDto> createStudent(@RequestBody StudentDto studentDto) {
     }
 
     @GetMapping("/{id}")
-    public Mono<StudentDto> getStudentById(@PathVariable Long id){
+    public Mono<StudentDto> getStudentById(@PathVariable UUID id){
         return studentService.getStudentById(id)
                 .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND, "Student not found")));
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Mono<StudentDto> updateStudent(@PathVariable Long id, @RequestBody StudentDto studentDto){
+    public Mono<StudentDto> updateStudent(@PathVariable UUID id, @RequestBody StudentDto studentDto){
         return studentService.updateStudent(studentDto,id);
     }
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public Mono<Void> deleteStudent(@PathVariable Long id) {
+    public Mono<Void> deleteStudent(@PathVariable UUID id) {
         return studentService.deleteStudent(id);
 
     }

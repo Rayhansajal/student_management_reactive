@@ -5,13 +5,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class ResultDto {
     private Long id;
-    private Long studentId;
+    private UUID studentId;
     private Long courseId;
 
     private Double marks;

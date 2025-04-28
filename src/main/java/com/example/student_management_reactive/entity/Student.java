@@ -8,6 +8,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -17,7 +18,7 @@ import java.time.LocalDate;
 public class Student extends BaseEntity{
 
     @Id
-    private Long id;
+    private UUID id;
     private Long rollNumber;
     private String firstName;
     private String lastName;

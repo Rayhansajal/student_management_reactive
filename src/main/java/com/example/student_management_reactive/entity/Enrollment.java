@@ -8,6 +8,7 @@ import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
@@ -17,7 +18,7 @@ public class Enrollment {
     @Id
     private Long id;
 
-    private Long studentId;
+    private UUID studentId;
     private Long courseId;
     private Long departmentId;
     private LocalDate enrollmentDate;

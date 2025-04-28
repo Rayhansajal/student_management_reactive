@@ -11,7 +11,7 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
 
-            <column name="student_id" type="BIGINT">
+            <column name="student_id" type="UUID">
                 <constraints nullable="false"/>
             </column>
 

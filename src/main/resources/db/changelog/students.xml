@@ -7,7 +7,7 @@
 
     <changeSet id="create-students-table" author="yourname">
         <createTable tableName="students">
-            <column name="id" type="BIGSERIAL">
+            <column name="id" type="UUID" defaultValueComputed="gen_random_uuid()">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="roll_number" type="BIGINT"/>

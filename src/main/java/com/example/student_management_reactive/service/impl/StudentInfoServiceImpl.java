@@ -13,6 +13,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -51,7 +52,7 @@ public class StudentInfoServiceImpl implements StudentInfoService {
         return studentRepository.findAll()
                 .flatMap(student -> {
                     Long deptId = student.getDepartmentId();
-                    Long studentId = student.getId(); // <-- FIX: Use correct getter here!
+                    UUID studentId = student.getId(); // <-- FIX: Use correct getter here!
 
                     Mono<DepartmentDto> departmentMono = departmentRepository.findById(deptId)
                             .map(department -> modelMapper.map(department, DepartmentDto.class));

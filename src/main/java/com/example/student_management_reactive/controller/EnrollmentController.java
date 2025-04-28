@@ -10,6 +10,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.util.UUID;
+
 @RestController
 @RequestMapping("enrollments")
 @RequiredArgsConstructor
@@ -24,7 +27,7 @@ public class EnrollmentController {
     }
 
     @GetMapping("/student/{studentId}")
-    public Mono<ResponseEntity<EnrollmentDto>> getStudentEnrollment(@PathVariable Long studentId) {
+    public Mono<ResponseEntity<EnrollmentDto>> getStudentEnrollment(@PathVariable UUID studentId) {
         return enrollmentService.getEnrollmentDetailsByStudentId(studentId)
                 .map(ResponseEntity::ok)
                 .defaultIfEmpty(ResponseEntity.notFound().build());

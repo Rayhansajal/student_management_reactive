@@ -5,11 +5,12 @@ import org.springframework.data.annotation.*;
 import org.springframework.data.relational.core.mapping.Column;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 public abstract class BaseEntity {
 
-    private Long id;
+    private UUID id;
 
     @CreatedDate
     @Column("created_at")

@@ -8,6 +8,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Data
 @Table("results")
@@ -16,7 +17,7 @@ import java.time.LocalDate;
 public class Result {
     @Id
    private Long id;
-   private Long studentId;
+   private UUID studentId;
    private Long courseId;
 
    private Double marks;

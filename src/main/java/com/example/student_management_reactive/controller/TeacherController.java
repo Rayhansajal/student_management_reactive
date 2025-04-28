@@ -9,6 +9,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.Duration;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/teacher")
@@ -29,15 +30,15 @@ public class TeacherController {
     }
 
     @GetMapping("/{id}")
-    public Mono<TeacherDto> getTeacherById(@PathVariable Long id){
+    public Mono<TeacherDto> getTeacherById(@PathVariable UUID id){
         return teacherService.getStudentById(id);}
 
     @PutMapping("/{id}")
-    public Mono<TeacherDto> updateTeacher(@PathVariable Long id, @RequestBody TeacherDto teacherDto ){
+    public Mono<TeacherDto> updateTeacher(@PathVariable UUID id, @RequestBody TeacherDto teacherDto ){
         return teacherService.updateStudent(teacherDto,id);
     }
     @DeleteMapping("/{id}")
-    public Mono<Void> deleteTeacher(@PathVariable Long id) {
+    public Mono<Void> deleteTeacher(@PathVariable UUID id) {
         return teacherService.deleteTeacher(id);
     }
 

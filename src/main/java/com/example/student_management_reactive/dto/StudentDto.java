@@ -3,11 +3,12 @@ package com.example.student_management_reactive.dto;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Data
 public class StudentDto extends BaseDto {
 
-    private Long id;
+    private UUID id;
     private Long rollNumber;
     private String firstName;
     private String lastName;
@@ -19,7 +20,4 @@ public class StudentDto extends BaseDto {
     private LocalDate dateOfBirth;
 
     private Long departmentId;
-
-
-
 }

@@ -6,7 +6,9 @@ import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-public interface StudentRepository extends ReactiveCrudRepository<Student ,Long> {
+import java.util.UUID;
+
+public interface StudentRepository extends ReactiveCrudRepository<Student , UUID> {
         Mono<Student> findByFirstName(String firstName);
         Flux<Student> findByFirstNameContainingIgnoreCase(String firstName);
         Mono<Student> findByEmail(String email);

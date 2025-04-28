@@ -6,7 +6,9 @@ import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-public interface TeacherRepository extends ReactiveCrudRepository<Teacher ,Long> {
+import java.util.UUID;
+
+public interface TeacherRepository extends ReactiveCrudRepository<Teacher , UUID> {
 
     Mono<Teacher> findByName(String name);
     Flux<Teacher> findByNameContainingIgnoringCase(String name);

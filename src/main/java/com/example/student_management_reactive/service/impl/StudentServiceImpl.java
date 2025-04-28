@@ -19,6 +19,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @AllArgsConstructor
 @Service
@@ -35,7 +36,7 @@ public class StudentServiceImpl implements StudentService {
 @Override
 public Mono<StudentDto> createStudent(StudentDto studentDto) {
     Student student = modelMapper.map(studentDto, Student.class);
-    student.setId(null); // Ensure entity is treated as new
+//    student.setId(null); // Ensure entity is treated as new
     return studentRepository.save(student)
             .map(savedStudent -> modelMapper.map(savedStudent, StudentDto.class));
 }
@@ -48,13 +49,13 @@ public Mono<StudentDto> createStudent(StudentDto studentDto) {
     }
 
     @Override
-    public Mono<StudentDto> getStudentById(Long id) {
+    public Mono<StudentDto> getStudentById(UUID id) {
         return studentRepository.findById(id)
                 .map(std->modelMapper.map(std,StudentDto.class));
     }
 
     @Override
-    public Mono<StudentDto> updateStudent(StudentDto studentDto, Long id) {
+    public Mono<StudentDto> updateStudent(StudentDto studentDto, UUID id) {
         return studentRepository.findById(id)
                 .flatMap(existing->{
                     existing.setRollNumber(studentDto.getRollNumber());
@@ -107,7 +108,7 @@ public Mono<StudentDto> createStudent(StudentDto studentDto) {
 //                .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND, "Student not found")));
 //    }
 @Override
-public Mono<Void> deleteStudent(Long id) {
+public Mono<Void> deleteStudent(UUID id) {
     return enrollmentRepository.deleteByStudentId(id) // first delete enrollments
             .then(studentRepository.deleteById(id));   // then delete student
 }
@@ -184,7 +185,7 @@ public Mono<Void> deleteStudent(Long id) {
 
         return spec.map((row, meta) -> {
             Student s = new Student();
-            s.setId(row.get("id", Long.class));
+            s.setId(row.get("id", UUID.class));
             s.setRollNumber(row.get("roll_number", Long.class));
             s.setFirstName(row.get("first_name", String.class));
             s.setLastName(row.get("last_name", String.class));

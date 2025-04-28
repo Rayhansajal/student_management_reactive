@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
+import java.util.UUID;
+
 @Data
 @Table("teacher")
 @EqualsAndHashCode(callSuper = true)
@@ -14,7 +16,7 @@ import org.springframework.data.relational.core.mapping.Table;
 @NoArgsConstructor
 public class Teacher extends BaseEntity{
     @Id
-    private Long id;
+    private UUID id;
     private String name;
     private Integer age;
     private String email;

@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.UUID;
+
 @AllArgsConstructor
 @Service
 public class TeacherServiceImpl implements TeacherService {
@@ -31,13 +33,13 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public Mono<TeacherDto> getStudentById(Long id) {
+    public Mono<TeacherDto> getStudentById(UUID id) {
         return teacherRepository.findById(id)
                 .map(th->modelMapper.map(th,TeacherDto.class));
     }
 
     @Override
-    public Mono<TeacherDto> updateStudent(TeacherDto teacherDto, Long id) {
+    public Mono<TeacherDto> updateStudent(TeacherDto teacherDto, UUID id) {
         return teacherRepository.findById(id).flatMap(existing->{
                     existing.setName(teacherDto.getName());
                     existing.setAge(teacherDto.getAge());
@@ -49,7 +51,7 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public Mono<Void> deleteTeacher(Long id) {
+    public Mono<Void> deleteTeacher(UUID id) {
         return teacherRepository.deleteById(id);
     }
 

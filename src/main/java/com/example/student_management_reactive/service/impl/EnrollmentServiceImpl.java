@@ -25,6 +25,7 @@ import reactor.core.publisher.Mono;
 import java.time.LocalDate;
 import java.util.List;
 
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -42,7 +43,7 @@ public class EnrollmentServiceImpl implements EnrollmentService {
 
     @Override
     public Mono<EnrollmentDto> enrollStudent(EnrollmentDto dto) {
-        Long studentId = dto.getStudentId();
+        UUID studentId = dto.getStudentId();
         Long departmentId = dto.getDepartmentId();
         List<Long> courseIds = dto.getCourseIds();
 
@@ -122,7 +123,7 @@ public class EnrollmentServiceImpl implements EnrollmentService {
     }
 
     @Override
-    public Mono<EnrollmentDto> getEnrollmentDetailsByStudentId(Long studentId) {
+    public Mono<EnrollmentDto> getEnrollmentDetailsByStudentId(UUID studentId) {
         return studentRepository.findById(studentId)
                 .switchIfEmpty(Mono.error(new IllegalArgumentException("Student not found")))
                 .flatMap(student -> {
