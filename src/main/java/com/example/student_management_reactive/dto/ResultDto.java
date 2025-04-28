@@ -4,12 +4,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class ResultDto {
-
     private Long id;
+    private Long studentId;
     private Long courseId;
-    private String gpa;
+
+    private Double marks;
+    private String grade;
+    private Boolean pass;
+    private LocalDate resultDate;
 }

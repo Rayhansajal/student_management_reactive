@@ -14,6 +14,7 @@
     <include file="db/changelog/courses.xml"/>
     <include file="db/changelog/students.xml"/>
     <include file="db/changelog/enrollment.xml"/>
+    <include file="db/changelog/result.xml"/>
 
 
 

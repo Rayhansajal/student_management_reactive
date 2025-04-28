@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="20250426-01" author="yourname">
+        <createTable tableName="results">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="student_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="course_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="marks" type="DOUBLE PRECISION"/>
+
+            <column name="grade" type="VARCHAR(10)"/>
+
+            <column name="pass" type="BOOLEAN"/>
+
+            <column name="result_date" type="DATE"/>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="results"
+                baseColumnNames="student_id"
+                constraintName="fk_result_student"
+                referencedTableName="students"
+                referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint
+                baseTableName="results"
+                baseColumnNames="course_id"
+                constraintName="fk_result_course"
+                referencedTableName="courses"
+                referencedColumnNames="course_id"/>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,6 +1,5 @@
 package com.example.student_management_reactive.entity;
 
-import com.example.student_management_reactive.dto.CourseDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

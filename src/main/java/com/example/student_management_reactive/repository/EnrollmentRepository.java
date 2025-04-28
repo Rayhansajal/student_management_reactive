@@ -22,6 +22,8 @@ public interface EnrollmentRepository extends ReactiveCrudRepository<Enrollment,
 
     Mono<Boolean> existsByStudentIdAndCourseIdAndDepartmentId(Long studentId, Long courseId, Long departmentId);
 
+    @Query("DELETE FROM enrollments WHERE student_id = :studentId")
+    Mono<Void> deleteByStudentId(Long studentId);
 
 
     @Query("SELECT * FROM enrollments ORDER BY enrollment_date DESC LIMIT :limit OFFSET :offset")

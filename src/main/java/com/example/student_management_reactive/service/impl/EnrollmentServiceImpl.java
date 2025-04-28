@@ -245,7 +245,6 @@ public class EnrollmentServiceImpl implements EnrollmentService {
                                         .switchIfEmpty(Mono.error(new IllegalStateException("Course not found")))
                         ).map(tuple -> {
                             EnrollmentDto dto = new EnrollmentDto();
-                            dto.setId(enrollment.getId());
                             dto.setStudentId(enrollment.getStudentId());
                             dto.setDepartmentId(enrollment.getDepartmentId());
                             dto.setCourseIds(List.of(enrollment.getCourseId()));
@@ -264,5 +263,39 @@ public class EnrollmentServiceImpl implements EnrollmentService {
                 });
     }
 
+    @Override
+    public Flux<EnrollmentDto> getAllByDepartmentId(Long departmentId) {
+        // First: find all enrollments by departmentId
+        return enrollmentRepository.findAllByDepartmentId(departmentId)
+                .flatMap(enrollment -> {
+                    Mono<Student> studentMono = studentRepository.findById(enrollment.getStudentId())
+                            .switchIfEmpty(Mono.error(new IllegalArgumentException("Student not found")));
+
+                    Mono<Department> departmentMono = departmentRepository.findById(enrollment.getDepartmentId())
+                            .switchIfEmpty(Mono.error(new IllegalArgumentException("Department not found")));
+
+                    Mono<Course> courseMono = courseRepository.findById(enrollment.getCourseId())
+                            .switchIfEmpty(Mono.error(new IllegalArgumentException("Course not found")));
+
+                    return Mono.zip(studentMono, departmentMono, courseMono)
+                            .map(tuple -> {
+                                Student student = tuple.getT1();
+                                Department department = tuple.getT2();
+                                Course course = tuple.getT3();
+
+                                EnrollmentDto dto = new EnrollmentDto();
+                                dto.setStudentId(enrollment.getStudentId());
+                                dto.setDepartmentId(enrollment.getDepartmentId());
+                                dto.setCourseIds(List.of(enrollment.getCourseId()));
+
+                                dto.setStudent(modelMapper.map(student, StudentDto.class));
+                                dto.setDepartment(modelMapper.map(department, DepartmentDto.class));
+                                dto.setCourses(List.of(modelMapper.map(course, CourseDto.class)));
+                                dto.setEnrollmentDate(enrollment.getEnrollmentDate());
+
+                                return dto;
+                            });
+                });
+    }
 
 }

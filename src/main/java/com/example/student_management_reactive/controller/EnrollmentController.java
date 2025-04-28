@@ -5,7 +5,6 @@ import com.example.student_management_reactive.service.EnrollmentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +29,11 @@ public class EnrollmentController {
                 .map(ResponseEntity::ok)
                 .defaultIfEmpty(ResponseEntity.notFound().build());
     }
+    @GetMapping("/department/{departmentId}")
+    public Flux<EnrollmentDto> getAllByDepartmentId(@PathVariable Long departmentId) {
+        return enrollmentService.getAllByDepartmentId(departmentId);
+    }
+
     @PutMapping("/{enrollmentId}")
     public Mono<EnrollmentDto> updateEnrollment(
             @PathVariable Long enrollmentId,

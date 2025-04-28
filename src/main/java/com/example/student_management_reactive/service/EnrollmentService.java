@@ -11,4 +11,5 @@ public interface EnrollmentService {
     Mono<EnrollmentDto> updateEnrollment(Long enrollmentId, EnrollmentDto dto);
     Mono<Void> deleteEnrollment(Long enrollmentId);
     Flux<EnrollmentDto> getAllEnrollments(Pageable pageable);
+    Flux<EnrollmentDto> getAllByDepartmentId(Long departmentId);
 }

@@ -2,16 +2,15 @@ package com.example.student_management_reactive.service.impl;
 
 import com.example.student_management_reactive.dto.StudentDto;
 import com.example.student_management_reactive.entity.Student;
+import com.example.student_management_reactive.repository.EnrollmentRepository;
 import com.example.student_management_reactive.repository.StudentRepository;
 import com.example.student_management_reactive.service.StudentService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.r2dbc.core.DatabaseClient;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -28,6 +27,7 @@ public class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
     private final ModelMapper modelMapper;
     private final DatabaseClient databaseClient;
+    private final EnrollmentRepository enrollmentRepository;
     private static final Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
 
 
@@ -73,14 +73,44 @@ public Mono<StudentDto> createStudent(StudentDto studentDto) {
 
     }
 
+    // Use Model Mapper
+//    @Override
+//    public Mono<StudentDto> updateStudent(StudentDto studentDto, Long id) {
+//        return studentRepository.findById(id)
+//                .switchIfEmpty(Mono.error(new StubNotFoundException("Student not found with ID: " + id)))
+//                .flatMap(existing -> {
+//                    modelMapper.map(studentDto, existing);
+//                    return studentRepository.save(existing);
+//                })
+//                .map(saved -> modelMapper.map(saved, StudentDto.class));
+//    }
 
-    @Override
-    public Mono<Void> deleteStudent(Long id) {
-        return studentRepository.findById(id)
-                .flatMap(studentRepository::delete
-                )
-                .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND, "Student not found")));
-    }
+    // Use BeanUtils copy properties
+//@Override
+//public Mono<StudentDto> updateStudent(StudentDto studentDto, Long id) {
+//    return studentRepository.findById(id)
+//            .switchIfEmpty(Mono.error(new StubNotFoundException("Student not found with ID: " + id)))
+//            .flatMap(existing -> {
+//                // Copy all properties except ID (and any you want to preserve)
+//                BeanUtils.copyProperties(studentDto, existing, "id");
+//                return studentRepository.save(existing);
+//            })
+//            .map(saved -> modelMapper.map(saved, StudentDto.class));
+//}
+
+
+//    @Override
+//    public Mono<Void> deleteStudent(Long id) {
+//        return studentRepository.findById(id)
+//                .flatMap(studentRepository::delete
+//                )
+//                .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND, "Student not found")));
+//    }
+@Override
+public Mono<Void> deleteStudent(Long id) {
+    return enrollmentRepository.deleteByStudentId(id) // first delete enrollments
+            .then(studentRepository.deleteById(id));   // then delete student
+}
 
     @Override
     public Mono<StudentDto> findStudentByName(String firstName) {
