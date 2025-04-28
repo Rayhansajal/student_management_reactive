@@ -14,29 +14,48 @@ import reactor.core.publisher.Mono;
 public class ResultServiceImpl implements ResultService {
     private final ResultRepository resultRepository;
     private final ModelMapper modelMapper;
+
     @Override
     public Mono<ResultDto> saveResult(ResultDto resultDto) {
-        Result result = new Result();
-        result.setStudentId(resultDto.getStudentId());
-        result.setCourseId(resultDto.getCourseId());
-        result.setMarks(resultDto.getMarks());
-        result.setGrade(resultDto.getGrade());
-        result.setPass(resultDto.getPass());
-        result.setResultDate(resultDto.getResultDate());
-
-        return resultRepository.save(result)
-                .map(savedResult -> {
-                    ResultDto dto = new ResultDto();
-                    dto.setId(savedResult.getId());
-                    dto.setStudentId(savedResult.getStudentId());
-                    dto.setCourseId(savedResult.getCourseId());
-                    dto.setMarks(savedResult.getMarks());
-                    dto.setGrade(savedResult.getGrade());
-                    dto.setPass(savedResult.getPass());
-                    dto.setResultDate(savedResult.getResultDate());
-                    return dto;
-                });
+        return resultRepository.findByStudentIdAndCourseId(
+                        resultDto.getStudentId(),
+                        resultDto.getCourseId())
+                .flatMap(existingResult ->
+                        Mono.error(new RuntimeException("Student already has a result for this course")))
+                .switchIfEmpty(Mono.defer(() -> {
+                    Result result = modelMapper.map(resultDto, Result.class);
+                    return resultRepository.save(result)
+                            .map(savedResult -> modelMapper.map(savedResult, ResultDto.class));
+                }))
+                .cast(ResultDto.class);
     }
+
+
+
+
+//    @Override
+//    public Mono<ResultDto> saveResult(ResultDto resultDto) {
+//        Result result = new Result();
+//        result.setStudentId(resultDto.getStudentId());
+//        result.setCourseId(resultDto.getCourseId());
+//        result.setMarks(resultDto.getMarks());
+//        result.setGrade(resultDto.getGrade());
+//        result.setPass(resultDto.getPass());
+//        result.setResultDate(resultDto.getResultDate());
+//
+//        return resultRepository.save(result)
+//                .map(savedResult -> {
+//                    ResultDto dto = new ResultDto();
+//                    dto.setId(savedResult.getId());
+//                    dto.setStudentId(savedResult.getStudentId());
+//                    dto.setCourseId(savedResult.getCourseId());
+//                    dto.setMarks(savedResult.getMarks());
+//                    dto.setGrade(savedResult.getGrade());
+//                    dto.setPass(savedResult.getPass());
+//                    dto.setResultDate(savedResult.getResultDate());
+//                    return dto;
+//                });
+//    }
 
 //    @Override
 //    public Flux<ResultDto> getResultsByStudentId(Long studentId) {

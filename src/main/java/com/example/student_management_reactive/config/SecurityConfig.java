@@ -1,6 +1,5 @@
 package com.example.student_management_reactive.config;
 
-import com.example.student_management_reactive.security.SecurityContextRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
