@@ -24,27 +24,26 @@ public class SecurityConfig {
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http,
                                                          ReactiveAuthenticationManager authenticationManager,
                                                          ServerSecurityContextRepository securityContextRepository) {
-        return http
+
+        http
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .authenticationManager(authenticationManager)
                 .securityContextRepository(securityContextRepository)
                 .authorizeExchange(exchanges -> exchanges
                         .pathMatchers("/auth/**").permitAll()
 
-
                         // ADMIN can create, update, delete
-
                         .pathMatchers(HttpMethod.PUT, "/student/**").hasRole("ADMIN")
                         .pathMatchers(HttpMethod.DELETE, "/student/**").hasRole("ADMIN")
                         .pathMatchers(HttpMethod.POST, "/student/**").hasRole("ADMIN")
-
 
                         // USER (and ADMIN) can view
                         .pathMatchers(HttpMethod.GET, "/student/**").hasAnyRole("USER", "ADMIN")
 
                         .anyExchange().authenticated()
-                )
-                .build();
+                );
+
+        return http.build();
     }
 }
 

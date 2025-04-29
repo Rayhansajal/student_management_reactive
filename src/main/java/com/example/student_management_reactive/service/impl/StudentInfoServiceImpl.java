@@ -26,29 +26,6 @@ public class StudentInfoServiceImpl implements StudentInfoService {
 
     @Override
     public Flux<StudentInfoDto> getAllStudent() {
-
-//            return studentRepository.findAll()
-//                    .flatMap(student -> {
-//                        Long deptId = student.getDepartmentId(); // Ensure this exists in Student
-//
-//                        Mono<DepartmentDto> departmentMono = departmentRepository.findById(deptId)
-//                                .map(department -> modelMapper.map(department, DepartmentDto.class));
-//
-//                        Mono<List<CourseDto>> courseDtosMono = courseRepository.findByDepartmentId(deptId)
-//                                .map(course -> modelMapper.map(course, CourseDto.class))
-//                                .collectList();
-//
-//                        Mono<List<ResultDto>> resultListMono = resultRepository.findByStudentId(student.getId())
-//                                .map(rs->modelMapper.map(rs, ResultDto.class))
-//                                .collectList();
-//
-//                        StudentDto studentDto = modelMapper.map(student, StudentDto.class);
-//
-//                        return Mono.zip(departmentMono, courseDtosMono, resultListMono)
-//                                .map(tuple -> new StudentInfoDto(studentDto, tuple.getT1(), tuple.getT2(), tuple.getT3()));
-//                    });
-//        }
-
         return studentRepository.findAll()
                 .flatMap(student -> {
                     Long deptId = student.getDepartmentId();

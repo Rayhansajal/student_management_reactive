@@ -36,7 +36,6 @@ public class StudentServiceImpl implements StudentService {
 @Override
 public Mono<StudentDto> createStudent(StudentDto studentDto) {
     Student student = modelMapper.map(studentDto, Student.class);
-//    student.setId(null); // Ensure entity is treated as new
     return studentRepository.save(student)
             .map(savedStudent -> modelMapper.map(savedStudent, StudentDto.class));
 }
@@ -100,13 +99,7 @@ public Mono<StudentDto> createStudent(StudentDto studentDto) {
 //}
 
 
-//    @Override
-//    public Mono<Void> deleteStudent(Long id) {
-//        return studentRepository.findById(id)
-//                .flatMap(studentRepository::delete
-//                )
-//                .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND, "Student not found")));
-//    }
+
 @Override
 public Mono<Void> deleteStudent(UUID id) {
     return enrollmentRepository.deleteByStudentId(id) // first delete enrollments
