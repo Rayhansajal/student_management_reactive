@@ -36,12 +36,12 @@ public class SecurityConfig {
 
                         .pathMatchers(HttpMethod.PUT, "/student/**").hasRole("ADMIN")
                         .pathMatchers(HttpMethod.DELETE, "/student/**").hasRole("ADMIN")
-
+                        .pathMatchers(HttpMethod.POST, "/student/**").hasRole("ADMIN")
 
 
                         // USER (and ADMIN) can view
                         .pathMatchers(HttpMethod.GET, "/student/**").hasAnyRole("USER", "ADMIN")
-                        .pathMatchers(HttpMethod.POST, "/student/**").hasAnyRole("USER","ADMIN")
+
                         .anyExchange().authenticated()
                 )
                 .build();
