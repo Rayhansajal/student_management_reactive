@@ -12,6 +12,7 @@ public interface StudentRepository extends ReactiveCrudRepository<Student , UUID
         Mono<Student> findByFirstName(String firstName);
         Flux<Student> findByFirstNameContainingIgnoreCase(String firstName);
         Mono<Student> findByEmail(String email);
+        Mono<Student> findByRollNumber(Long rollNumber);
 //        Mono<Student> findById(Long id);
 
 

@@ -10,7 +10,9 @@
             <column name="id" type="UUID" defaultValueComputed="gen_random_uuid()">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="roll_number" type="BIGINT"/>
+            <column name="roll_number" type="BIGINT">
+                <constraints unique="true" nullable="false"/>
+            </column>
             <column name="first_name" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>

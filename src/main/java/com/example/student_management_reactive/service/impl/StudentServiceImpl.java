@@ -35,9 +35,19 @@ public class StudentServiceImpl implements StudentService {
 
 @Override
 public Mono<StudentDto> createStudent(StudentDto studentDto) {
-    Student student = modelMapper.map(studentDto, Student.class);
-    return studentRepository.save(student)
-            .map(savedStudent -> modelMapper.map(savedStudent, StudentDto.class));
+//
+//    Student student = modelMapper.map(studentDto, Student.class);
+//    return studentRepository.save(student)
+//            .map(savedStudent -> modelMapper.map(savedStudent, StudentDto.class));
+
+    return studentRepository.findByRollNumber(studentDto.getRollNumber())
+            .flatMap(existing -> Mono.<StudentDto>error(
+                    new RuntimeException("Student with roll number " + studentDto.getRollNumber() + " already exists.")
+            ))
+            .switchIfEmpty(
+                    studentRepository.save(modelMapper.map(studentDto, Student.class))
+                            .map(saved -> modelMapper.map(saved, StudentDto.class))
+            );
 }
 
 
