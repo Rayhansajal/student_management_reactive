@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/result")
 @AllArgsConstructor
@@ -17,13 +19,13 @@ public class ResultController {
         return resultService.saveResult(resultDto);
     }
 
-//    @GetMapping("/student/{studentId}")
-//    public Flux<ResultDto> getResultsByStudent(@PathVariable Long studentId) {
-//        return resultService.getResultsByStudentId(studentId);
-//    }
-//
-//    @GetMapping("/course/{courseId}")
-//    public Flux<ResultDto> getResultsByCourse(@PathVariable Long courseId) {
-//        return resultService.getResultsByCourseId(courseId);
-//    }
+    @GetMapping("/student/{studentId}")
+    public Flux<ResultDto> getResultsByStudent(@PathVariable UUID studentId) {
+        return resultService.getResultsByStudentId(studentId);
+    }
+
+    @GetMapping("/course/{courseId}")
+    public Flux<ResultDto> getResultsByCourse(@PathVariable Long courseId) {
+        return resultService.getResultsByCourseId(courseId);
+    }
 }

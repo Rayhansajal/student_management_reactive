@@ -28,7 +28,7 @@ public class Student extends BaseEntity{
     private String mobile;
     private String address;
     private LocalDate dateOfBirth;
-
+// foreign key
     private Long departmentId;
 
 }

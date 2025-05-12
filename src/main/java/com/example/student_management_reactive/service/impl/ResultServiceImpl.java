@@ -7,7 +7,11 @@ import com.example.student_management_reactive.service.ResultService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.util.UUID;
+
 @Service
 @AllArgsConstructor
 public class ResultServiceImpl implements ResultService {
@@ -56,15 +60,15 @@ public class ResultServiceImpl implements ResultService {
 //                });
 //    }
 
-//    @Override
-//    public Flux<ResultDto> getResultsByStudentId(Long studentId) {
-//        return resultRepository.findByStudentId(studentId)
-//                .map(result -> modelMapper.map(result, ResultDto.class));
-//    }
-//
-//    @Override
-//    public Flux<ResultDto> getResultsByCourseId(Long courseId) {
-//        return resultRepository.findAllByCourseId(courseId)
-//                .map(result -> modelMapper.map(result, ResultDto.class));
-//    }
+    @Override
+    public Flux<ResultDto> getResultsByStudentId(UUID studentId) {
+        return resultRepository.findByStudentId(studentId)
+                .map(result -> modelMapper.map(result, ResultDto.class));
+    }
+
+    @Override
+    public Flux<ResultDto> getResultsByCourseId(Long courseId) {
+        return resultRepository.findAllByCourseId(courseId)
+                .map(result -> modelMapper.map(result, ResultDto.class));
+    }
 }
